@@ -1,8 +1,22 @@
 package com.example.kodetesttask.ui.home
 
-import androidx.lifecycle.ViewModel
+
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.kodetesttask.database.DatabaseDao
+import com.example.kodetesttask.model.entity.UserItemEntity
+import com.example.kodetesttask.model.entity.UsersItemsEntity
+
+import com.example.kodetesttask.repository.MainRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor (dataSource: DatabaseDao):ViewModel() {
+class HomeViewModel @Inject constructor(
+private val repository: MainRepository
+) : ViewModel() {
+
+val userList = repository.getUsersItems()
+
+
+
 }

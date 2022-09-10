@@ -24,7 +24,7 @@ abstract class  ViewModelModule {
 	@Binds
 	@IntoMap
 	@ViewModelKey(ProfileDetailViewModel::class)
-	abstract fun bindAddExpensesViewModel(addExpensesViewModel: ProfileDetailViewModel): ViewModel
+	abstract fun bindAddExpensesViewModel(profileDetailViewModel: ProfileDetailViewModel): ViewModel
 
 
 
