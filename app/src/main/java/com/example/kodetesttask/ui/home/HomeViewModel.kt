@@ -4,6 +4,7 @@ package com.example.kodetesttask.ui.home
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.kodetesttask.database.DatabaseDao
+import com.example.kodetesttask.model.UsersList
 import com.example.kodetesttask.model.entity.UserItemEntity
 import com.example.kodetesttask.model.entity.UsersItemsEntity
 
@@ -17,6 +18,9 @@ private val repository: MainRepository
 
 val userList = repository.getUsersItems()
 
+	fun getUsersFilter(department:String): LiveData<List<UsersList>> {
+		return repository.getUsersFilter(department)
+	}
 
 
 }

@@ -1,6 +1,8 @@
 package com.example.kodetesttask.repository
 
+import androidx.lifecycle.LiveData
 import com.example.kodetesttask.database.DatabaseDao
+import com.example.kodetesttask.model.UsersList
 import com.example.kodetesttask.network.UsersRemoteDataSource
 import com.example.kodetesttask.utils.performGetOperation
 import javax.inject.Inject
@@ -17,5 +19,13 @@ class MainRepository @Inject constructor(
 		{ localDataSource.getAllUser() },
 		{ remoteDataSource.getAllListUsers() },
 		{ localDataSource.insert(it.items) })
+
+	fun getUsersFilter(deportment:String): LiveData<List<UsersList>> {
+		return localDataSource.getUsersFilter(deportment)
+	}
+
+	fun getUserId(id:String): LiveData<UsersList> {
+		return localDataSource.getUserId(id)
+	}
 }
 

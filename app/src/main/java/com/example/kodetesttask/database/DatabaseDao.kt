@@ -16,6 +16,12 @@ interface DatabaseDao {
 	@Query("SELECT * from users_list_table")
 	fun getAllUser(): LiveData<List<UsersList>>
 
+	@Query("SELECT * from users_list_table WHERE department =:department")
+	fun getUsersFilter(department: String):LiveData<List<UsersList>>
+
+	@Query("SELECT * from users_list_table WHERE id =:id")
+	fun getUserId(id:String):LiveData<UsersList>
+
 	@Query("DELETE from users_list_table")
 	fun clearAll()
 }

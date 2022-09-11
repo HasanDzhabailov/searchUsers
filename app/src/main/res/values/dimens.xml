@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_item_conteiner_height">84dp</dimen>
+    <dimen name="avatar_size_image_view">72dp</dimen>
+    <dimen name="avatar_margin_start_image_view">16dp</dimen>
+    <dimen name="avatar_margin_top_image_view">6dp</dimen>
+    <dimen name="avatar_margin_end_image_view">16dp</dimen>
+    <dimen name="avatar_margin_bottom_image_view">6dp</dimen>
+    <dimen name="full_name_sizer_text_view">16sp</dimen>
+    <dimen name="user_tag_margin_start_text_view">4dp</dimen>
+    <dimen name="user_tag_size_text_view">14sp</dimen>
+    <dimen name="department_size_text_view">13sp</dimen>
+</resources>

@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">KodeTestTask</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="loading_network">Загрузка . . .</string>
+
+    <string name="All">Все</string>
+    <string name="Android">Android</string>
+    <string name="iOS">iOS</string>
+    <string name="Design">Дизайн</string>
+    <string name="Management">Менеджмент</string>
+    <string name="QA">QA</string>
+    <string name="Back_office">Бэк-офис</string>
+    <string name="Frontend">Frontend</string>
+    <string name="HR">HR</string>
+    <string name="PR">PR</string>
+    <string name="Backend">Backend</string>
+    <string name="Support">Техподдержка</string>
+    <string name="Analytics">Аналитика</string>
+
 </resources>
