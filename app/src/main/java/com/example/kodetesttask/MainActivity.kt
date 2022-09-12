@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 		val navController: NavController = navHostFragment.navController
 
 		val appBarConfiguration: AppBarConfiguration = AppBarConfiguration(navController.graph)
+		binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
-		setupActionBarWithNavController(navController, appBarConfiguration)
 	}
 	override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 }

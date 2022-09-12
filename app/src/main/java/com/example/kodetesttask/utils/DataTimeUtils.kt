@@ -10,6 +10,6 @@ fun convertDateToLong(date: String): Long {
 
 fun convertLongToTime(time: Long): String {
 	val date = Date(time)
-	val format = SimpleDateFormat("d MMM yyyy")
+	val format = SimpleDateFormat("dd.mm.yyyy")
 	return format.format(date)
 }
