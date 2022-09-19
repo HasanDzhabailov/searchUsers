@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/search_bar_element"
             android:background="@drawable/ic_corner_rounding"
-            android:id="@+id/linearLayout"
             android:layout_width="400dp"
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,121 +23,75 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/editTextTextPersonName2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:hint="Введите имя, тег, почту..."
+                android:inputType="textPersonName"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textColorHint="#C3C3C6"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonSort"
+                app:layout_constraintStart_toEndOf="@+id/imageButton"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageButton
+                android:id="@+id/imageButtonSort"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="14dp"
+                android:background="#00FFFFFF"
+                android:scaleType="center"
 
-            <android.widget.SearchView
-                android:id="@+id/searchView"
-                android:layout_width="343dp"
-                android:layout_height="48dp"
-                android:background="@drawable/ic_corner_rounding"
-                android:searchIcon="@drawable/ic_baseline_search_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_filter_search_bar"
+                android:layout_marginRight="14dp" />
 
             <ImageButton
                 android:id="@+id/imageButton"
-                android:layout_width="48dp"
-                android:layout_height="22dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/ic_filter_search_bar"
-                android:contentDescription="@string/app_name"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="14dp"
+                android:background="#00FFFFFF"
+                android:scaleType="center"
 
-        </LinearLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_search_24" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/viewPager2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toBottomOf="@+id/search_bar_element"
+            app:tabMode="scrollable"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/All"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Android" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/iOS" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Design" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Management" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/QA" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Back_office" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Frontend" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/HR" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PR" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Backend" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Support" />
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Analytics" />
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/userListRv"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loading"
-            tools:itemCount="10"
-            tools:listitem="@layout/user_item" />
-
-        <TextView
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading_network"
-            app:layout_constraintBottom_toTopOf="@+id/userListRv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.457"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-            app:layout_constraintVertical_bias="0.067" />
+            tools:listitem = "@layout/fragment_users"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

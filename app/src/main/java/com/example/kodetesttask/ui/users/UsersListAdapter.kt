@@ -1,4 +1,4 @@
-package com.example.kodetesttask.ui.home
+package com.example.kodetesttask.ui.users
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kodetesttask.databinding.UserItemBinding
 import com.example.kodetesttask.model.UsersList
 
-class HomeAdapter(private val listener: UsersItemListener) : RecyclerView.Adapter<UsersViewHolder>() {
+class UserListAdapter(private val listener: UsersItemListener) : RecyclerView.Adapter<UsersViewHolder>() {
 	interface UsersItemListener {
 		fun onClickedUser(userId: String)
 	}
@@ -35,7 +35,7 @@ class HomeAdapter(private val listener: UsersItemListener) : RecyclerView.Adapte
 
 class UsersViewHolder(
 	private val itemBinding: UserItemBinding,
-	private val listener: HomeAdapter.UsersItemListener,
+	private val listener: UserListAdapter.UsersItemListener,
 ) : RecyclerView.ViewHolder(itemBinding.root),
 	View.OnClickListener {
 

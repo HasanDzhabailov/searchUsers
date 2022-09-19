@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.kodetesttask.di.ViewModelKey
 import com.example.kodetesttask.ui.home.HomeViewModel
 import com.example.kodetesttask.ui.profiledetail.ProfileDetailViewModel
+import com.example.kodetesttask.ui.users.UsersListViewModel
 import com.example.kodetesttask.viewmodel.ViewModelFactory
 
 import dagger.Binds
@@ -24,9 +25,12 @@ abstract class  ViewModelModule {
 	@Binds
 	@IntoMap
 	@ViewModelKey(ProfileDetailViewModel::class)
-	abstract fun bindAddExpensesViewModel(profileDetailViewModel: ProfileDetailViewModel): ViewModel
+	abstract fun bindProfileDetailViewModel(profileDetailViewModel: ProfileDetailViewModel): ViewModel
 
-
+	@Binds
+	@IntoMap
+	@ViewModelKey(UsersListViewModel::class)
+	abstract fun bindUsersListViewModel(usersListViewModel:UsersListViewModel):ViewModel
 
 	@Binds
 	abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

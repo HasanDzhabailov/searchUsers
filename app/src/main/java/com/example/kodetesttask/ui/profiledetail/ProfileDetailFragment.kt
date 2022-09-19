@@ -1,7 +1,11 @@
 package com.example.kodetesttask.ui.profiledetail
 
 
+import android.Manifest
+import android.Manifest.permission.CALL_PHONE
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +14,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 import androidx.databinding.DataBindingUtil
 
@@ -65,9 +71,16 @@ class ProfileDetailFragment : Fragment(), Injectable {
 	}
 
 	private fun call(phone: String) {
-		val dialIntent = Intent(Intent.ACTION_DIAL)
+		//val dialIntent = Intent(Intent.ACTION_DIAL)
+		var permissionCallStatus = ContextCompat.checkSelfPermission(requireActivity(),CALL_PHONE)
+		val dialIntent = Intent(Intent.ACTION_CALL)
 		dialIntent.data = Uri.parse("tel:$phone")
-		startActivity(dialIntent)
+		if(permissionCallStatus == PackageManager.PERMISSION_GRANTED) {
+			startActivity(dialIntent)
+		}
+		else{
+			ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE),1)
+		}
 	}
 
 	private fun bindUser(user: UsersList) {

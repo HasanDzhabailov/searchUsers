@@ -10,10 +10,12 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable/ic_filter_search_bar.xml" value="0.15" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable/ic_launcher_background.xml" value="0.15" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_home.xml" value="0.19610507246376813" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_profile_detail.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_users.xml" value="0.2015625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragmet_users_list.xml" value="0.19610507246376813" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/user_item.xml" value="0.2015625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/users_list.xml" value="0.19610507246376813" />
       </map>
     </option>
   </component>

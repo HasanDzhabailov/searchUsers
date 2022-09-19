@@ -16,5 +16,7 @@
     <string name="Backend">Backend</string>
     <string name="Support">Техподдержка</string>
     <string name="Analytics">Аналитика</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

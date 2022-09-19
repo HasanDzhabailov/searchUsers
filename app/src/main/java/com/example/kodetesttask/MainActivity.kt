@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 	@Inject
 	lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 	override fun onCreate(savedInstanceState: Bundle?) {
+
 		super.onCreate(savedInstanceState)
+
 		val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		val navHostFragment: NavHostFragment =
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 		val navController: NavController = navHostFragment.navController
 
 		val appBarConfiguration: AppBarConfiguration = AppBarConfiguration(navController.graph)
+
 		binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
 	}

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="usersListViewModel"
+            type="com.example.kodetesttask.ui.users.UsersListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.users.UsersListFragment">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/progress"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="24dp"
+                android:alpha="0"
+                app:cpb_background_progressbar_color="#F7F7F8"
+                app:cpb_background_progressbar_width="3dp"
+                app:cpb_progressbar_color="#6534FF"
+                app:cpb_progressbar_width="3dp"
+                app:cpb_round_border="true" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userListRv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/user_item" />
+        </FrameLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            tools:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_marginStart="16dp"
+                        android:backgroundTint="#C3C3C6"
+                        app:cardCornerRadius="36dp"
+                        app:cardElevation="0dp"
+                        app:cardMaxElevation="0dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="144dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="80dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_marginStart="16dp"
+                        android:backgroundTint="#C3C3C6"
+                        app:cardCornerRadius="36dp"
+                        app:cardElevation="0dp"
+                        app:cardMaxElevation="0dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="144dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="80dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_marginStart="16dp"
+                        android:backgroundTint="#C3C3C6"
+                        app:cardCornerRadius="36dp"
+                        app:cardElevation="0dp"
+                        app:cardMaxElevation="0dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="144dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="80dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_marginStart="16dp"
+                        android:backgroundTint="#C3C3C6"
+                        app:cardCornerRadius="36dp"
+                        app:cardElevation="0dp"
+                        app:cardMaxElevation="0dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="144dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="80dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:backgroundTint="#C3C3C6"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
