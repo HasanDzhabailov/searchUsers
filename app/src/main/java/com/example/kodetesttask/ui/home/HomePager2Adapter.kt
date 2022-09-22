@@ -2,13 +2,19 @@ package com.example.kodetesttask.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.kodetesttask.Consts.ARG_TAG
 import com.example.kodetesttask.Consts.tabValue
+import com.example.kodetesttask.model.UsersList
 import com.example.kodetesttask.ui.categories.*
 import com.example.kodetesttask.ui.users.UsersListFragment
 
-class HomePager2Adapter(fragment: Fragment): FragmentStateAdapter(fragment) {
+
+class HomePager2Adapter(private val fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
+	private var usersList = emptyList<UsersList>()
+
 	override fun getItemCount(): Int {
 		return 13
 	}
@@ -32,5 +38,7 @@ class HomePager2Adapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 				}
 	}
 
-
+	fun getFragment(position: Int): UsersListFragment? {
+		return fragmentManager.findFragmentByTag("f$position") as? UsersListFragment
+	}
 }

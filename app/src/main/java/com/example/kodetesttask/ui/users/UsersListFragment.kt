@@ -16,6 +16,8 @@ import com.example.kodetesttask.Consts.ARG_TAG
 import com.example.kodetesttask.R
 import com.example.kodetesttask.databinding.FragmentUsersBinding
 import com.example.kodetesttask.di.Injectable
+import com.example.kodetesttask.model.Users
+import com.example.kodetesttask.ui.home.HomeFragment
 import com.example.kodetesttask.utils.Resource
 import com.example.kodetesttask.utils.autoCleared
 import javax.inject.Inject
@@ -24,13 +26,68 @@ import javax.inject.Inject
 open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItemListener {
 	@Inject
 	lateinit var viewModelFactory: ViewModelProvider.Factory
-
 	lateinit var usersListViewModel: UsersListViewModel
 	lateinit var adapter: UserListAdapter
 
 	private var binding by autoCleared<FragmentUsersBinding>()
 	private var department: String? = null
+	private var recyclerViewAdapter: UserListAdapter? = null
 
+	private fun setupObservers() {
+		usersListViewModel.userList.observe(viewLifecycleOwner, Observer {
+			when (it.status) {
+
+				Resource.Status.SUCCESS -> {
+					binding.loading.visibility = View.GONE
+					var filter = getCategory()
+					if (!it.data.isNullOrEmpty() && filter == "all") {
+						adapter.setItems(ArrayList(it.data))
+
+					}
+				}
+				Resource.Status.ERROR ->
+					Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+
+				Resource.Status.LOADING ->
+					binding.loading.visibility = View.VISIBLE
+			}
+		})
+	}
+
+	private fun setupRecyclerView() {
+		adapter = getAdapter()
+		binding.userListRv.layoutManager = LinearLayoutManager(requireContext())
+		binding.userListRv.adapter = adapter
+	}
+
+	private fun filterTabsSetup() {
+		if (getCategory() == "all") {
+			getAllUsers()
+		}
+		usersListViewModel.getFilterUsersList(getCategory())
+			.observe(viewLifecycleOwner) { users ->
+				adapter.setItems(ArrayList(users))
+			}
+	}
+
+	private fun getAdapter(users: Users = Users()): UserListAdapter {
+		if (recyclerViewAdapter == null)
+			recyclerViewAdapter = UserListAdapter(
+				this,
+				requireContext(),
+				users,
+				(parentFragment as HomeFragment).getSortType()
+			)
+		return recyclerViewAdapter!!
+	}
+
+	private fun getAllUsers() {
+		usersListViewModel.getAllUsersList().observe(viewLifecycleOwner) { users ->
+			if (!users.isNullOrEmpty()) {
+				adapter.setItems(ArrayList(users))
+			}
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +107,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 			}!!
 		}
 		binding.usersListViewModel = usersListViewModel
-		binding.lifecycleOwner = this
+		binding.lifecycleOwner = viewLifecycleOwner
 		setupObservers()
 		setupRecyclerView()
 		filterTabsSetup()
@@ -63,42 +120,16 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 		)
 	}
 
-	private fun setupRecyclerView() {
-		adapter = UserListAdapter(this)
-		binding.userListRv.layoutManager = LinearLayoutManager(requireContext())
-		binding.userListRv.adapter = adapter
-	}
-
-	private fun setupObservers() {
-		usersListViewModel.userList.observe(viewLifecycleOwner, Observer {
-			when (it.status) {
-
-				Resource.Status.SUCCESS -> {
-					binding.loading.visibility = View.GONE
-					var filter = getCategory()
-					if (!it.data.isNullOrEmpty()&& filter == "all"){
-
-						adapter.setItems(ArrayList(it.data))
-					}
-
-				}
-				Resource.Status.ERROR ->
-					Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-
-				Resource.Status.LOADING ->
-					binding.loading.visibility = View.VISIBLE
-			}
-		})
-	}
-	open fun getCategory(): String{
+	open fun getCategory(): String {
 		return "all"
 	}
 
-	private fun filterTabsSetup(){
-		usersListViewModel.getFilterUsersList(getCategory())
-			.observe(viewLifecycleOwner){ users ->
-				adapter.setItems(ArrayList(users))
-
-			}
+	fun search(str: String) {
+		getAdapter().search = str
 	}
+
+	enum class SortType {
+		ALPHABET
+	}
+
 }

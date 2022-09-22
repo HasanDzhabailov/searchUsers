@@ -1,9 +1,7 @@
 package com.example.kodetesttask.ui.profiledetail
 
 
-import android.Manifest
 import android.Manifest.permission.CALL_PHONE
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 
@@ -40,8 +38,49 @@ import javax.inject.Inject
 class ProfileDetailFragment : Fragment(), Injectable {
 	@Inject
 	lateinit var viewModelFactory: ViewModelProvider.Factory
-	private var binding by autoCleared<FragmentProfileDetailBinding>()
 	lateinit var profileDetailViewModel: ProfileDetailViewModel
+
+	private var binding by autoCleared<FragmentProfileDetailBinding>()
+
+	private fun setupObserver() {
+		profileDetailViewModel.character.observe(viewLifecycleOwner, Observer {
+			bindUser(it)
+		})
+
+	}
+
+	private fun call(phone: String) {
+		var permissionCallStatus = ContextCompat.checkSelfPermission(requireActivity(), CALL_PHONE)
+		val callIntent = Intent(Intent.ACTION_CALL)
+		callIntent.data = Uri.parse("tel:$phone")
+		if (permissionCallStatus == PackageManager.PERMISSION_GRANTED) {
+			startActivity(callIntent)
+		} else {
+			ActivityCompat.requestPermissions(requireActivity(),
+				arrayOf(CALL_PHONE),
+				1)
+		}
+	}
+
+	private fun bindUser(user: UsersList) {
+		binding.fullNameProfileTextView.text = "${user.firstName}  ${user.lastName}"
+		binding.userTagProfileTextView.text = user.userTag
+
+		binding.ageProfileTextView.text =
+			((System.currentTimeMillis() - convertDateToLong(user.birthday)) / 31556952000).toString() + " лет"
+
+		binding.birthdayProfileTextView.text = convertLongToTime(convertDateToLong(user.birthday))
+		binding.phoneProfileTextView.text = user.phone
+
+		binding.phoneProfileTextView.setOnClickListener {
+			call(user.phone)
+		}
+
+		Glide.with(binding.root)
+			.load(user.avatarUrl)
+			.transform(CircleCrop())
+			.into(binding.avatarProfileImageView)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -58,48 +97,9 @@ class ProfileDetailFragment : Fragment(), Injectable {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.profileDetailViewModel = profileDetailViewModel
-		binding.lifecycleOwner = this
+		binding.lifecycleOwner = viewLifecycleOwner
+
 		arguments?.getString("id")?.let { profileDetailViewModel.start(it) }
 		setupObserver()
-	}
-
-	private fun setupObserver() {
-		profileDetailViewModel.character.observe(viewLifecycleOwner, Observer {
-			bindUser(it)
-		})
-
-	}
-
-	private fun call(phone: String) {
-		//val dialIntent = Intent(Intent.ACTION_DIAL)
-		var permissionCallStatus = ContextCompat.checkSelfPermission(requireActivity(),CALL_PHONE)
-		val dialIntent = Intent(Intent.ACTION_CALL)
-		dialIntent.data = Uri.parse("tel:$phone")
-		if(permissionCallStatus == PackageManager.PERMISSION_GRANTED) {
-			startActivity(dialIntent)
-		}
-		else{
-			ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE),1)
-		}
-	}
-
-	private fun bindUser(user: UsersList) {
-
-		binding.fullNameProfileTextView.text = "${user.firstName}  ${user.lastName}"
-		binding.userTagProfileTextView.text = user.userTag
-		binding.ageProfileTextView.text =
-			((System.currentTimeMillis() - convertDateToLong(user.birthday)) / 31556952000).toString() + " лет"
-		binding.birthdayProfileTextView.text = convertLongToTime(convertDateToLong(user.birthday))
-
-
-		binding.phoneProfileTextView.text = user.phone
-		binding.phoneProfileTextView.setOnClickListener {
-			call(user.phone)
-		}
-
-		Glide.with(binding.root)
-			.load(user.avatarUrl)
-			.transform(CircleCrop())
-			.into(binding.avatarProfileImageView)
 	}
 }

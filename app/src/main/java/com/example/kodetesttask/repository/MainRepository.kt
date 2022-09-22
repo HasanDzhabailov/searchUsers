@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class MainRepository @Inject constructor(
 	private val remoteDataSource: UsersRemoteDataSource,
-	private val localDataSource: DatabaseDao,
+	private val localDataSource: DatabaseDao
 ) {
 
 	fun getUsersItems() = performGetOperation(
@@ -20,12 +20,16 @@ class MainRepository @Inject constructor(
 		{ remoteDataSource.getAllListUsers() },
 		{ localDataSource.insert(it.items) })
 
-	fun getUsersFilter(deportment:String): LiveData<List<UsersList>> {
+	fun getUsersFilter(deportment: String): LiveData<List<UsersList>> {
 		return localDataSource.getUsersFilter(deportment)
 	}
 
-	fun getUserId(id:String): LiveData<UsersList> {
+	fun getUserId(id: String): LiveData<UsersList> {
 		return localDataSource.getUserId(id)
+	}
+
+	fun getAllUsersList(): LiveData<List<UsersList>> {
+		return localDataSource.getAllUser()
 	}
 }
 
