@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
@@ -82,6 +84,7 @@ class ProfileDetailFragment : Fragment(), Injectable {
 			.into(binding.avatarProfileImageView)
 	}
 
+
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
@@ -102,4 +105,5 @@ class ProfileDetailFragment : Fragment(), Injectable {
 		arguments?.getString("id")?.let { profileDetailViewModel.start(it) }
 		setupObserver()
 	}
+
 }

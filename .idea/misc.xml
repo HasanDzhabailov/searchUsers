@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable-v24/bottom_sort_shape.xml" value="0.1505" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable-v24/frame_3214.xml" value="0.15" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable-v24/spacing_div.xml" value="0.15" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.15" />
@@ -10,6 +11,8 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable/ic_filter_search_bar.xml" value="0.15" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/drawable/ic_launcher_background.xml" value="0.15" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/dialog_sort.xml" value="0.35733695652173914" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_failure.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_profile_detail.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/KodeTestTask/app/src/main/res/layout/fragment_users.xml" value="0.2015625" />

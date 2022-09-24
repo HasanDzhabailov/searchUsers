@@ -80,7 +80,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_bar_element"
-            app:tabMode="scrollable"/>
+            app:tabIndicatorColor="@color/purple_500"
+            app:tabMode="scrollable" />
 
 
         <androidx.viewpager2.widget.ViewPager2

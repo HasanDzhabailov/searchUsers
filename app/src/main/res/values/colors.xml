@@ -11,5 +11,5 @@
     <color name="full_name_color_text_view">#050510</color>
     <color name="user_tag_color_text_view">#97979B</color>
     <color name="department_color_text_view">#55555C</color>
-
+    <color name="transparent">#00FFFFFF</color>
 </resources>

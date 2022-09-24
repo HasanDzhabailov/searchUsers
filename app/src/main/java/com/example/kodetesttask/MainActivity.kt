@@ -2,6 +2,7 @@ package com.example.kodetesttask
 
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -22,16 +23,20 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
 		super.onCreate(savedInstanceState)
 
-		val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-		setContentView(binding.root)
-		val navHostFragment: NavHostFragment =
-			supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-		val navController: NavController = navHostFragment.navController
-
-		val appBarConfiguration: AppBarConfiguration = AppBarConfiguration(navController.graph)
-
-		binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+		setContentView(R.layout.activity_main)
+		val navController = findNavController(R.id.nav_host_fragment)
+		val appBarConfiguration = AppBarConfiguration(setOf(
+			R.id.homeFragment,
+			R.id.errorFragment
+		))
+		setupActionBarWithNavController(navController, appBarConfiguration)
 
 	}
+
+	override fun onSupportNavigateUp(): Boolean {
+		val navController = findNavController(R.id.nav_host_fragment)
+		return navController.navigateUp() || super.onSupportNavigateUp()
+	}
+
 	override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 }

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.KodeTestTask" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="windowActionBar">false</item>
+    <style name="Theme.KodeTestTask" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
@@ -32,5 +32,27 @@
     <style name="detail">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#97979B</item>
+    </style>
+    <style name="SortRadioButtons" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorSurface">@color/purple_500</item>
+        <item name="colorSecondary">@color/purple_500</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SortDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="backgroundColor">@color/transparent</item>
+        <item name="background">@color/transparent</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ShoppingList.BottomSheetDialog</item>
+    </style>
+
+    <style name="ShoppingList.BottomSheetDialog" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:elevation">0dp</item>
+        <item name="elevation">0dp</item>
     </style>
 </resources>

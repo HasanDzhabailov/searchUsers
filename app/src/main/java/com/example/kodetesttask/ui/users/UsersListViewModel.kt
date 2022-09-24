@@ -4,16 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.kodetesttask.model.UsersList
 import com.example.kodetesttask.repository.MainRepository
+import com.example.kodetesttask.utils.Resource
 import javax.inject.Inject
 
 class UsersListViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
-	val userList = repository.getUsersItems()
+	fun getUserListNetwork(sort:Int): LiveData<Resource<List<UsersList>>> {
 
-	fun getFilterUsersList(department: String): LiveData<List<UsersList>> {
-		return repository.getUsersFilter(department)
+		return repository.getUsersItems(sort)
 	}
 
-	fun getAllUsersList(): LiveData<List<UsersList>> {
-		return repository.getAllUsersList()
+
+	fun getFilterUsersList(department: String,sort: Int): LiveData<List<UsersList>> {
+		return repository.getUsersFilter(department,sort)
+	}
+
+	fun getAllUsersList(sort: Int): LiveData<List<UsersList>> {
+		return repository.getAllUsersList(sort)
 	}
 }

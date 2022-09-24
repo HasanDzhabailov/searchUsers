@@ -2,8 +2,7 @@ package com.example.kodetesttask.ui.home
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +21,7 @@ import com.example.kodetesttask.R
 import com.example.kodetesttask.databinding.FragmentHomeBinding
 import com.example.kodetesttask.di.Injectable
 import com.example.kodetesttask.model.UsersList
+import com.example.kodetesttask.ui.sheet.BottomSortSheet
 
 import com.example.kodetesttask.ui.users.UsersListFragment
 import com.example.kodetesttask.utils.autoCleared
@@ -86,6 +86,10 @@ class HomeFragment : Fragment(), Injectable {
 		binding.editTextTextPersonName2.addTextChangedListener {
 			search(it.toString())
 		}
+		binding.imageButtonSort.setOnClickListener(){
+			val dialog = BottomSortSheet()
+			dialog.show(childFragmentManager, "SORT")
+		}
 	}
 
 
@@ -93,4 +97,18 @@ class HomeFragment : Fragment(), Injectable {
 		return sortType
 	}
 
+	fun setSortType(sortType: UsersListFragment.SortType){
+		this.sortType = sortType
+
+		if(sortType == UsersListFragment.SortType.DATE)
+			binding.imageButtonSort.setColorFilter(Color.parseColor("#6534FF"))
+		else
+			binding.imageButtonSort.colorFilter = null
+	getCurrentViewPagerItemFragment()?.updateSort()
+
+	}
+
+	fun getCurrentViewPagerItemFragment(): UsersListFragment?{
+		return (binding.viewPager2.adapter as HomePager2Adapter).getFragment(binding.viewPager2.currentItem)
+	}
 }
