@@ -42,7 +42,7 @@
                 style="@style/SortRadioButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="По дню рождения"
+                android:text="По возрасту"
                 android:theme="@style/SortRadioButtons" />
         </RadioGroup>
 

@@ -25,13 +25,9 @@ class UserListAdapter(
 
 	private fun sort(users: Users): Users {
 		val usersList = Users()
-		users.forEach { user ->
-			usersList.add(user)
-		}
+		users.forEach { user -> usersList.add(user) }
 		if (sortType == UsersListFragment.SortType.ALPHABET) {
-			Collections.sort(usersList) { o1, o2 ->
-				o1!!.firstName.compareTo(o2!!.firstName)
-			}
+			Collections.sort(usersList) { o1, o2 -> o1!!.firstName.compareTo(o2!!.firstName) }
 		}
 		return usersList
 	}
@@ -49,14 +45,7 @@ class UserListAdapter(
 	override fun getItemCount(): Int = items.size
 
 	override fun onBindViewHolder(holder: UsersViewHolder, position: Int) =
-		holder.bind(items[position], search)
-
-
-	var search: String = ""
-		set(value) {
-			field = value
-			notifyDataSetChanged()
-		}
+		holder.bind(items[position])
 
 	fun setItems(items: ArrayList<UsersList>) {
 		this.items.clear()
@@ -67,27 +56,15 @@ class UserListAdapter(
 	interface UsersItemListener {
 		fun onClickedUser(userId: String)
 	}
-
 }
 
 class UsersViewHolder(
 	private val itemBinding: UserItemBinding,
 	private val listener: UserListAdapter.UsersItemListener,
-) : RecyclerView.ViewHolder(itemBinding.root),
-	View.OnClickListener {
+) : RecyclerView.ViewHolder(itemBinding.root), View.OnClickListener {
 
 	private lateinit var user: UsersList
 
-	private fun search(params: ViewGroup.LayoutParams, userName: String, search: String) {
-		if (search != "") {
-			if (!userName.contains(search, true))
-				params.height = 0
-			else
-				params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-		} else {
-			params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-		}
-	}
 	init {
 		itemBinding.root.setOnClickListener(this)
 	}
@@ -97,11 +74,8 @@ class UsersViewHolder(
 	}
 
 	@SuppressLint("SetTextI18n")
-	fun bind(item: UsersList, search: String) {
+	fun bind(item: UsersList) {
 		this.user = item
-		var binding: UserItemBinding = UserItemBinding.bind(itemBinding.root)
-		search(binding.root.layoutParams, user.firstName + " " + user.lastName, search)
-
 		itemBinding.fullNameTextView.text = "${item.firstName}  ${item.lastName}"
 		itemBinding.userTagTextView.text = item.userTag
 		itemBinding.departmentTextView.text = item.department
@@ -110,5 +84,4 @@ class UsersViewHolder(
 			.transform(CircleCrop())
 			.into(itemBinding.avatarImageView)
 	}
-
 }

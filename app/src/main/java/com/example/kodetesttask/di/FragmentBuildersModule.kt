@@ -21,7 +21,9 @@ abstract class FragmentBuildersModule {
 	@ContributesAndroidInjector
 	abstract fun contributeUsersListFragment(): UsersListFragment
 
-	//CategoryFragment
+	/**
+	 * categoryFragment start
+	 */
 	@ContributesAndroidInjector
 	abstract fun contributeAnalystFragment(): AnalystsUsersFragment
 
@@ -57,4 +59,7 @@ abstract class FragmentBuildersModule {
 
 	@ContributesAndroidInjector
 	abstract fun contributeSupportsFragment(): SupportsUsersFragment
+	/**
+	 * categoryFragment end
+	 */
 }

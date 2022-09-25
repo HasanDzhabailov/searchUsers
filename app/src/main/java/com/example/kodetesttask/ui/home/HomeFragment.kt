@@ -2,41 +2,33 @@ package com.example.kodetesttask.ui.home
 
 import android.graphics.Color
 import android.os.Bundle
-
-import androidx.fragment.app.Fragment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-
 import androidx.databinding.DataBindingUtil
-
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-
 import androidx.viewpager2.widget.ViewPager2
 import com.example.kodetesttask.Consts.tabValue
-
-
 import com.example.kodetesttask.R
 import com.example.kodetesttask.databinding.FragmentHomeBinding
 import com.example.kodetesttask.di.Injectable
 import com.example.kodetesttask.model.UsersList
 import com.example.kodetesttask.ui.sheet.BottomSortSheet
-
 import com.example.kodetesttask.ui.users.UsersListFragment
 import com.example.kodetesttask.utils.autoCleared
+import com.example.kodetesttask.utils.hideKeyboard
 import com.google.android.material.tabs.TabLayoutMediator
-
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-
 class HomeFragment : Fragment(), Injectable {
-	@Inject
-	lateinit var viewModelFactory: ViewModelProvider.Factory
+	@Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
 	lateinit var homeViewModel: HomeViewModel
-	lateinit var usersList:ArrayList<UsersList>
+	lateinit var usersList: ArrayList<UsersList>
 
 	private lateinit var viewPager: ViewPager2
 	private lateinit var adapter: HomePager2Adapter
@@ -44,31 +36,17 @@ class HomeFragment : Fragment(), Injectable {
 	private var binding by autoCleared<FragmentHomeBinding>()
 	private var sortType: UsersListFragment.SortType = UsersListFragment.SortType.ALPHABET
 
-	private fun search(str: String){
-		if(str != "")
-			binding.imageButton.setColorFilter(Color.parseColor("#050510"))
-		else
-			binding.imageButton.colorFilter = null
-
-		(binding.viewPager2.adapter as HomePager2Adapter).getFragment(binding.viewPager2.currentItem)?.let {
-			it.search(str)
-		}
-	}
-
-	private fun getMainViewPagerAdapter(): HomePager2Adapter{
-		return HomePager2Adapter(
-			childFragmentManager,
-			lifecycle
-		)
+	private fun getMainViewPagerAdapter(): HomePager2Adapter {
+		return HomePager2Adapter(childFragmentManager, lifecycle)
 	}
 
 	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
+		inflater: LayoutInflater,
+		container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View? {
 		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-		homeViewModel =
-			ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+		homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 		return binding.root
 	}
 
@@ -81,34 +59,64 @@ class HomeFragment : Fragment(), Injectable {
 		viewPager.adapter = adapter
 		TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
 			tab.text = "${tabValue[position]}"
-		}.attach()
-
-		binding.editTextTextPersonName2.addTextChangedListener {
-			search(it.toString())
 		}
-		binding.imageButtonSort.setOnClickListener(){
+			.attach()
+
+		binding.editTextTextPersonName2.addTextChangedListener { editable ->
+			getCurrentViewPagerItemFragment()?.getSearchUser(editable)
+		}
+		binding.editTextTextPersonName2.setOnFocusChangeListener { view, b ->
+
+				binding.imageButtonSort.visibility = View.GONE
+				binding.clearBtn.visibility = View.VISIBLE
+
+
+		}
+
+		binding.editTextTextPersonName2.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+			if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+				v.hideKeyboard()
+				v.clearFocus()
+				return@OnKeyListener true
+			}
+			false
+		})
+		binding.imageButtonSort.setOnClickListener() {
 			val dialog = BottomSortSheet()
 			dialog.show(childFragmentManager, "SORT")
 		}
+		binding.imageButton.setOnClickListener{
+			binding.editTextTextPersonName2.clearFocus()
+			binding.clearBtn.visibility = View.GONE
+			binding.imageButtonSort.visibility = View.VISIBLE
+			it.hideKeyboard()
+
+		}
+		binding.clearBtn.setOnClickListener(){
+			binding.editTextTextPersonName2.clearFocus()
+			binding.clearBtn.visibility = View.GONE
+			binding.imageButtonSort.visibility = View.VISIBLE
+			binding.editTextTextPersonName2.setText("")
+			it.hideKeyboard()
+		}
 	}
 
-
-	fun getSortType(): UsersListFragment.SortType{
+	fun getSortType(): UsersListFragment.SortType {
 		return sortType
 	}
 
-	fun setSortType(sortType: UsersListFragment.SortType){
+	fun setSortType(sortType: UsersListFragment.SortType) {
 		this.sortType = sortType
 
-		if(sortType == UsersListFragment.SortType.DATE)
+		if (sortType == UsersListFragment.SortType.DATE)
 			binding.imageButtonSort.setColorFilter(Color.parseColor("#6534FF"))
-		else
-			binding.imageButtonSort.colorFilter = null
-	getCurrentViewPagerItemFragment()?.updateSort()
-
+		else binding.imageButtonSort.colorFilter = null
+		getCurrentViewPagerItemFragment()?.updateSort()
 	}
 
-	fun getCurrentViewPagerItemFragment(): UsersListFragment?{
-		return (binding.viewPager2.adapter as HomePager2Adapter).getFragment(binding.viewPager2.currentItem)
+	fun getCurrentViewPagerItemFragment(): UsersListFragment? {
+		return (binding.viewPager2.adapter as HomePager2Adapter).getFragment(
+			binding.viewPager2.currentItem
+		)
 	}
 }

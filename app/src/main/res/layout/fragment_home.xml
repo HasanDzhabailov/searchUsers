@@ -67,6 +67,20 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_search_24" />
 
+            <Button
+                android:id="@+id/clearBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/ic_btn_ronding"
+                android:text="отмена"
+                android:textColor="@color/purple_700"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.777" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

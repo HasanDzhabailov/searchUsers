@@ -1,54 +1,38 @@
 package com.example.kodetesttask.ui.profiledetail
 
-
 import android.Manifest.permission.CALL_PHONE
 import android.content.Intent
 import android.content.pm.PackageManager
-
 import android.net.Uri
 import android.os.Bundle
-
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
 import androidx.databinding.DataBindingUtil
-
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kodetesttask.R
-
 import com.example.kodetesttask.databinding.FragmentProfileDetailBinding
 import com.example.kodetesttask.di.Injectable
 import com.example.kodetesttask.model.UsersList
-
 import com.example.kodetesttask.utils.autoCleared
 import com.example.kodetesttask.utils.convertDateToLong
 import com.example.kodetesttask.utils.convertLongToTime
-
 import javax.inject.Inject
 
-
 class ProfileDetailFragment : Fragment(), Injectable {
-	@Inject
-	lateinit var viewModelFactory: ViewModelProvider.Factory
+	@Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 	lateinit var profileDetailViewModel: ProfileDetailViewModel
 
 	private var binding by autoCleared<FragmentProfileDetailBinding>()
 
 	private fun setupObserver() {
-		profileDetailViewModel.character.observe(viewLifecycleOwner, Observer {
-			bindUser(it)
-		})
-
+		profileDetailViewModel.character.observe(viewLifecycleOwner, Observer { bindUser(it) })
 	}
 
 	private fun call(phone: String) {
@@ -58,9 +42,7 @@ class ProfileDetailFragment : Fragment(), Injectable {
 		if (permissionCallStatus == PackageManager.PERMISSION_GRANTED) {
 			startActivity(callIntent)
 		} else {
-			ActivityCompat.requestPermissions(requireActivity(),
-				arrayOf(CALL_PHONE),
-				1)
+			ActivityCompat.requestPermissions(requireActivity(), arrayOf(CALL_PHONE), 1)
 		}
 	}
 
@@ -69,14 +51,13 @@ class ProfileDetailFragment : Fragment(), Injectable {
 		binding.userTagProfileTextView.text = user.userTag
 
 		binding.ageProfileTextView.text =
-			((System.currentTimeMillis() - convertDateToLong(user.birthday)) / 31556952000).toString() + " лет"
+			((System.currentTimeMillis() - convertDateToLong(user.birthday)) / 31556952000)
+				.toString() + " лет"
 
 		binding.birthdayProfileTextView.text = convertLongToTime(convertDateToLong(user.birthday))
 		binding.phoneProfileTextView.text = user.phone
 
-		binding.phoneProfileTextView.setOnClickListener {
-			call(user.phone)
-		}
+		binding.phoneProfileTextView.setOnClickListener { call(user.phone) }
 
 		Glide.with(binding.root)
 			.load(user.avatarUrl)
@@ -84,9 +65,9 @@ class ProfileDetailFragment : Fragment(), Injectable {
 			.into(binding.avatarProfileImageView)
 	}
 
-
 	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
+		inflater: LayoutInflater,
+		container: ViewGroup?,
 		savedInstanceState: Bundle?,
 	): View? {
 		binding =
@@ -105,5 +86,4 @@ class ProfileDetailFragment : Fragment(), Injectable {
 		arguments?.getString("id")?.let { profileDetailViewModel.start(it) }
 		setupObserver()
 	}
-
 }
