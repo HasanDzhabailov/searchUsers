@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.kodetesttask.model.UsersList
 import com.example.kodetesttask.ui.categories.*
 import com.example.kodetesttask.ui.users.UsersListFragment
 

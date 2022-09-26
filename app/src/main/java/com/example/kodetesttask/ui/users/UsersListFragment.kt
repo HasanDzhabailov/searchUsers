@@ -5,15 +5,13 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationCompat.getCategory
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kodetesttask.Consts.ARG_TAG
+import com.example.kodetesttask.Const.ARG_TAG
 import com.example.kodetesttask.R
 import com.example.kodetesttask.databinding.FragmentUsersBinding
 import com.example.kodetesttask.di.Injectable
@@ -26,32 +24,32 @@ import javax.inject.Inject
 open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItemListener {
 	@Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 	lateinit var usersListViewModel: UsersListViewModel
-	lateinit var adapter: UserListAdapter
+	private lateinit var adapter: UserListAdapter
 	private var binding by autoCleared<FragmentUsersBinding>()
+
 	private var department: String? = null
 	private var recyclerViewAdapter: UserListAdapter? = null
-	private fun setupObservers() {
 
+	private fun setupObservers() {
 		usersListViewModel
 			.getUserListNetwork(checkSortType())
 			.observe(
-				viewLifecycleOwner,
-				Observer {
-					when (it.status) {
-						Resource.Status.SUCCESS -> {
-							binding.loading.visibility = View.GONE
-							var filter = getCategory()
-							if (!it.data.isNullOrEmpty() && filter == "all") {
-								adapter.setItems(ArrayList(it.data))
-							}
+				viewLifecycleOwner
+			) {
+				when (it.status) {
+					Resource.Status.SUCCESS -> {
+						binding.loading.visibility = View.GONE
+						val filter = getCategory()
+						if (!it.data.isNullOrEmpty() && filter == "all") {
+							adapter.setItems(ArrayList(it.data))
 						}
-						Resource.Status.ERROR -> {
-							findNavController().navigate(R.id.action_homeFragment_to_errorFragment)
-						}
-						Resource.Status.LOADING -> binding.loading.visibility = View.VISIBLE
 					}
+					Resource.Status.ERROR -> {
+						findNavController().navigate(R.id.action_homeFragment_to_errorFragment)
+					}
+					Resource.Status.LOADING -> binding.loading.visibility = View.VISIBLE
 				}
-			)
+			}
 	}
 
 	private fun setupRecyclerView() {
@@ -64,7 +62,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 		if (getCategory() == "all") {
 			getAllUsers(checkSortType())
 		}
-		usersListViewModel.getFilterUsersList(getCategory(), checkSortType()).observe(
+		usersListViewModel.getFilterUsersFromDatabase(getCategory(), checkSortType()).observe(
 			viewLifecycleOwner
 		) { users ->
 			if (!users.isNullOrEmpty()) adapter.setItems(ArrayList(users))
@@ -84,7 +82,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 	}
 
 	private fun getAllUsers(sort: Int) {
-		usersListViewModel.getAllUsersList(sort).observe(viewLifecycleOwner) { users ->
+		usersListViewModel.getAllUsersFromDatabase(sort).observe(viewLifecycleOwner) { users ->
 			if (!users.isNullOrEmpty()) {
 				adapter.setItems(ArrayList(users))
 			}
@@ -96,6 +94,8 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 		if (getAdapter().sortType == SortType.DATE) return 2
 		return 1
 	}
+
+
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -111,7 +111,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		arguments?.takeIf {
-			it.containsKey(ARG_TAG)?.apply { department = requireArguments().getString(ARG_TAG) }!!
+			it.containsKey(ARG_TAG).apply { department = requireArguments().getString(ARG_TAG) }
 		}
 		binding.usersListViewModel = usersListViewModel
 		binding.lifecycleOwner = viewLifecycleOwner
@@ -129,6 +129,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 			}
 
 		}
+
 	}
 
 	override fun onClickedUser(userId: String) {
@@ -142,15 +143,6 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 
 	fun getSort(): SortType {
 		return getAdapter().sortType
-	}
-
-	fun getCountItem(): Int {
-		return getAdapter().itemCount
-	}
-
-	fun enabled(visibility: Boolean) {
-		if (visibility) binding.searchFailed.visibility = View.VISIBLE
-		else binding.searchFailed.visibility = View.GONE
 	}
 
 	fun getSearchUser(str: Editable?) {

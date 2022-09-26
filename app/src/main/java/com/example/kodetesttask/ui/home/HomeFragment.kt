@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.example.kodetesttask.Consts.tabValue
+import com.example.kodetesttask.Const.tabValue
 import com.example.kodetesttask.R
 import com.example.kodetesttask.databinding.FragmentHomeBinding
 import com.example.kodetesttask.di.Injectable
@@ -40,11 +40,24 @@ class HomeFragment : Fragment(), Injectable {
 		return HomePager2Adapter(childFragmentManager, lifecycle)
 	}
 
+	private fun btnVisibleControl(clearBtn:Boolean){
+		when(clearBtn){
+			true -> {
+				binding.clearBtn.visibility = View.VISIBLE
+				binding.imageButtonSort.visibility = View.GONE
+			}
+			else -> {
+				binding.clearBtn.visibility = View.GONE
+				binding.imageButtonSort.visibility = View.VISIBLE
+			}
+		}
+
+	}
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?,
-	): View? {
+	): View {
 		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 		homeViewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 		return binding.root
@@ -65,37 +78,33 @@ class HomeFragment : Fragment(), Injectable {
 		binding.editTextTextPersonName2.addTextChangedListener { editable ->
 			getCurrentViewPagerItemFragment()?.getSearchUser(editable)
 		}
-		binding.editTextTextPersonName2.setOnFocusChangeListener { view, b ->
-
-				binding.imageButtonSort.visibility = View.GONE
-				binding.clearBtn.visibility = View.VISIBLE
-
-
+		binding.editTextTextPersonName2.setOnFocusChangeListener { _, _ ->
+			btnVisibleControl(true)
 		}
 
 		binding.editTextTextPersonName2.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
 			if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
 				v.hideKeyboard()
-				v.clearFocus()
+				binding.editTextTextPersonName2.clearFocus()
+				btnVisibleControl(false)
 				return@OnKeyListener true
 			}
+
 			false
 		})
-		binding.imageButtonSort.setOnClickListener() {
+		binding.imageButtonSort.setOnClickListener{
 			val dialog = BottomSortSheet()
 			dialog.show(childFragmentManager, "SORT")
 		}
 		binding.imageButton.setOnClickListener{
+			btnVisibleControl(false)
 			binding.editTextTextPersonName2.clearFocus()
-			binding.clearBtn.visibility = View.GONE
-			binding.imageButtonSort.visibility = View.VISIBLE
 			it.hideKeyboard()
 
 		}
-		binding.clearBtn.setOnClickListener(){
+		binding.clearBtn.setOnClickListener{
 			binding.editTextTextPersonName2.clearFocus()
-			binding.clearBtn.visibility = View.GONE
-			binding.imageButtonSort.visibility = View.VISIBLE
+			btnVisibleControl(false)
 			binding.editTextTextPersonName2.setText("")
 			it.hideKeyboard()
 		}

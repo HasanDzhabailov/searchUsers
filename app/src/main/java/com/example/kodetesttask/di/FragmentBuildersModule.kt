@@ -3,6 +3,7 @@ package com.example.kodetesttask.di
 
 
 import com.example.kodetesttask.ui.categories.*
+import com.example.kodetesttask.ui.error.ErrorFragment
 import com.example.kodetesttask.ui.home.HomeFragment
 import com.example.kodetesttask.ui.profiledetail.ProfileDetailFragment
 import com.example.kodetesttask.ui.users.UsersListFragment
@@ -21,6 +22,8 @@ abstract class FragmentBuildersModule {
 	@ContributesAndroidInjector
 	abstract fun contributeUsersListFragment(): UsersListFragment
 
+	@ContributesAndroidInjector
+	abstract fun contributeErrorFragment():ErrorFragment
 	/**
 	 * categoryFragment start
 	 */

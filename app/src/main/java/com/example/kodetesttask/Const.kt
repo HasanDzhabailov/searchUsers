@@ -1,6 +1,6 @@
 package com.example.kodetesttask
 
-object Consts {
+object Const {
 	const val ARG_TAG = "ARG_TAG"
 
 	val tabValue = listOf<String>(

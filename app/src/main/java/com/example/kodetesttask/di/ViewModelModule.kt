@@ -2,6 +2,7 @@ package com.example.kodetesttask.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.kodetesttask.ui.error.ErrorViewModel
 import com.example.kodetesttask.ui.home.HomeViewModel
 import com.example.kodetesttask.ui.profiledetail.ProfileDetailViewModel
 import com.example.kodetesttask.ui.users.UsersListViewModel
@@ -30,6 +31,11 @@ abstract class ViewModelModule {
 	@IntoMap
 	@ViewModelKey(UsersListViewModel::class)
 	abstract fun bindUsersListViewModel(usersListViewModel: UsersListViewModel): ViewModel
+
+	@Binds
+	@IntoMap
+	@ViewModelKey(ErrorViewModel::class)
+	abstract fun binErrorViewModel(errorViewModel: ErrorViewModel): ViewModel
 
 	@Binds abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

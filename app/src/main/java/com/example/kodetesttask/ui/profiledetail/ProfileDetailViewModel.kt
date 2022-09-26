@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ProfileDetailViewModel @Inject constructor(private val repository: MainRepository) :
 	ViewModel() {
 	private val _id = MutableLiveData<String>()
-	private val _character = _id.switchMap { id -> repository.getUserId(id) }
+	private val _character = _id.switchMap { id -> repository.getUserById(id) }
 	val character: LiveData<UsersList> = _character
 
 	fun start(id: String) {

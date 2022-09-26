@@ -13,41 +13,44 @@ class MainRepository
 @Inject
 constructor(
 	private val remoteDataSource: UsersRemoteDataSource,
-	private val localDataSource: DatabaseDao
+	private val localDataSource: DatabaseDao,
 ) {
 
-
-
-	fun getUsersItems(sort: Int) =
+	fun loadAndSaveData(sort: Int) =
 		performGetOperation(
-			{ localDataSource.getAllUser(sort) },
+			{ localDataSource.getAllUsersFromDatabase(sort) },
 			{ remoteDataSource.getAllListUsers() },
 			{ localDataSource.insert(it.items) }
 		)
 
-	fun getUsersFilter(deportment: String, sort: Int): LiveData<List<UsersList>> {
-		return localDataSource.getUsersFilter(deportment, sort)
+	suspend fun clearDataFromDatabase(){
+		return localDataSource.clearDataFromDatabase()
+	}
+	fun getFilterUsersFromDatabase(deportment: String, sort: Int): LiveData<List<UsersList>> {
+		return localDataSource.getFilterUsersFromDatabase(deportment, sort)
 	}
 
-	fun getUserId(id: String): LiveData<UsersList> {
-		return localDataSource.getUserId(id)
+	fun getUserById(id: String): LiveData<UsersList> {
+		return localDataSource.getUserById(id)
 	}
 
-	fun getAllUsersList(sort: Int): LiveData<List<UsersList>> {
-		return localDataSource.getAllUser(sort)
-	}
-	suspend fun getSearchUsers(query: String, department: String): List<UsersList> {
-		return localDataSource.searchUsers(query, department)
-	}
-	suspend fun allSearch(): List<UsersList> {
-		return localDataSource.allSearch()
+	fun getAllUsersFromDatabase(sort: Int): LiveData<List<UsersList>> {
+		return localDataSource.getAllUsersFromDatabase(sort)
 	}
 
-	suspend fun searchFilterTabs(department: String): List<UsersList> {
-		return localDataSource.searchFilterTabs(department)
+	suspend fun getAllUsersWhenSearching(): List<UsersList> {
+		return localDataSource.getAllUsersWhenSearching()
 	}
 
-	suspend fun searchAllUsers(query: String): List<UsersList> {
-		return localDataSource.searchUsersAll(query)
+	suspend fun getUsersFilterTabsWhenSearching(department: String): List<UsersList> {
+		return localDataSource.getUsersFilterTabsWhenSearching(department)
+	}
+
+	suspend fun searchWhenAllUsers(query: String): List<UsersList> {
+		return localDataSource.searchWhenAllUsers(query)
+	}
+
+	suspend fun searchUsersWhenTabsFilter(query: String, department: String): List<UsersList> {
+		return localDataSource.searchUsersWhenTabsFilter(query, department)
 	}
 }

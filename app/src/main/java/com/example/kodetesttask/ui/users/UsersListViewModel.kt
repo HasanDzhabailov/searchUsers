@@ -17,16 +17,15 @@ class UsersListViewModel @Inject constructor(private val repository: MainReposit
 		get() = _searchResults
 
 	fun getUserListNetwork(sort: Int): LiveData<Resource<List<UsersList>>> {
-
-		return repository.getUsersItems(sort)
+		return repository.loadAndSaveData(sort)
 	}
 
-	fun getFilterUsersList(department: String, sort: Int): LiveData<List<UsersList>> {
-		return repository.getUsersFilter(department, sort)
+	fun getFilterUsersFromDatabase(department: String, sort: Int): LiveData<List<UsersList>> {
+		return repository.getFilterUsersFromDatabase(department, sort)
 	}
 
-	fun getAllUsersList(sort: Int): LiveData<List<UsersList>> {
-		return repository.getAllUsersList(sort)
+	fun getAllUsersFromDatabase(sort: Int): LiveData<List<UsersList>> {
+		return repository.getAllUsersFromDatabase(sort)
 	}
 
 	fun getSearchUsers(query: Editable?, department: String) {
@@ -34,19 +33,19 @@ class UsersListViewModel @Inject constructor(private val repository: MainReposit
 			if (query.isNullOrBlank()) {
 				when (department) {
 					"all" -> {
-						repository.allSearch().let { _searchResults.postValue(it) }
+						repository.getAllUsersWhenSearching().let { _searchResults.postValue(it) }
 					}
 					else -> {
-						repository.searchFilterTabs(department).let { _searchResults.postValue(it) }
+						repository.getUsersFilterTabsWhenSearching(department).let { _searchResults.postValue(it) }
 					}
 				}
 			} else {
 				when (department) {
 					"all" -> {
-						repository.searchAllUsers("*$query*").let { _searchResults.postValue(it) }
+						repository.searchWhenAllUsers("*$query*").let { _searchResults.postValue(it) }
 					}
 					else -> {
-						repository.getSearchUsers("*$query*", department).let {
+						repository.searchUsersWhenTabsFilter("*$query*", department).let {
 							_searchResults.postValue(it)
 						}
 					}

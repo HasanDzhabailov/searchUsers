@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -32,11 +31,11 @@ class ProfileDetailFragment : Fragment(), Injectable {
 	private var binding by autoCleared<FragmentProfileDetailBinding>()
 
 	private fun setupObserver() {
-		profileDetailViewModel.character.observe(viewLifecycleOwner, Observer { bindUser(it) })
+		profileDetailViewModel.character.observe(viewLifecycleOwner) { bindUser(it) }
 	}
 
 	private fun call(phone: String) {
-		var permissionCallStatus = ContextCompat.checkSelfPermission(requireActivity(), CALL_PHONE)
+		val permissionCallStatus = ContextCompat.checkSelfPermission(requireActivity(), CALL_PHONE)
 		val callIntent = Intent(Intent.ACTION_CALL)
 		callIntent.data = Uri.parse("tel:$phone")
 		if (permissionCallStatus == PackageManager.PERMISSION_GRANTED) {
@@ -69,7 +68,7 @@ class ProfileDetailFragment : Fragment(), Injectable {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?,
-	): View? {
+	): View {
 		binding =
 			DataBindingUtil.inflate(inflater, R.layout.fragment_profile_detail, container, false)
 		profileDetailViewModel =
