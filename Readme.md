@@ -27,3 +27,16 @@ https://user-images.githubusercontent.com/51163032/192384357-72701c7b-381e-4d8d-
 ![Screenshot_1664227252](https://user-images.githubusercontent.com/51163032/192383856-b47bfd3d-27e0-4c55-9606-fe6c5f217cca.png)
 
   </div>
+## Tech stack
+- Kotlin based, Coroutines + LiveData for asynchronous
+- Dagger for dependency injection
+- Jetpack:
+  - Lifecycle
+  - ViewModel
+  - Room 
+- Architecture:
+  - MVVM Architecture
+- Navigation Component
+- Retrofit2 
+- Gson
+- Glide
