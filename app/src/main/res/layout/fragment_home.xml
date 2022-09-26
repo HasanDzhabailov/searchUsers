@@ -15,13 +15,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/search_bar_element"
-            android:background="@drawable/ic_corner_rounding"
-            android:layout_width="400dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
+            android:background="@drawable/ic_corner_rounding"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal">
+            app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/editTextTextPersonName2"
@@ -50,9 +50,9 @@
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName2"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_filter_search_bar"
-                android:layout_marginRight="14dp" />
+                app:srcCompat="@drawable/ic_filter_search_bar" />
 
             <ImageButton
                 android:id="@+id/imageButton"
@@ -63,6 +63,7 @@
                 android:scaleType="center"
 
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_search_24" />

@@ -20,6 +20,7 @@ import com.example.kodetesttask.ui.sheet.BottomSortSheet
 import com.example.kodetesttask.ui.users.UsersListFragment
 import com.example.kodetesttask.utils.autoCleared
 import com.example.kodetesttask.utils.hideKeyboard
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -75,12 +76,18 @@ class HomeFragment : Fragment(), Injectable {
 		}
 			.attach()
 
+
+
 		binding.editTextTextPersonName2.addTextChangedListener { editable ->
 			getCurrentViewPagerItemFragment()?.getSearchUser(editable)
 		}
+
+
 		binding.editTextTextPersonName2.setOnFocusChangeListener { _, _ ->
 			btnVisibleControl(true)
+
 		}
+
 
 		binding.editTextTextPersonName2.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
 			if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
@@ -108,6 +115,15 @@ class HomeFragment : Fragment(), Injectable {
 			binding.editTextTextPersonName2.setText("")
 			it.hideKeyboard()
 		}
+	}
+
+	override fun onViewStateRestored(savedInstanceState: Bundle?) {
+		super.onViewStateRestored(savedInstanceState)
+		binding.editTextTextPersonName2.setText("")
+		if (sortType == UsersListFragment.SortType.DATE)
+			binding.imageButtonSort.setColorFilter(Color.parseColor("#6534FF"))
+		else binding.imageButtonSort.colorFilter = null
+		getCurrentViewPagerItemFragment()?.updateSort()
 	}
 
 	fun getSortType(): UsersListFragment.SortType {

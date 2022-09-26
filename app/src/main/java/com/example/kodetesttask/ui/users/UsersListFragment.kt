@@ -17,6 +17,7 @@ import com.example.kodetesttask.databinding.FragmentUsersBinding
 import com.example.kodetesttask.di.Injectable
 import com.example.kodetesttask.model.Users
 import com.example.kodetesttask.ui.home.HomeFragment
+import com.example.kodetesttask.ui.home.HomePager2Adapter
 import com.example.kodetesttask.utils.Resource
 import com.example.kodetesttask.utils.autoCleared
 import javax.inject.Inject
@@ -24,7 +25,7 @@ import javax.inject.Inject
 open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItemListener {
 	@Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 	lateinit var usersListViewModel: UsersListViewModel
-	private lateinit var adapter: UserListAdapter
+	lateinit var adapter: UserListAdapter
 	private var binding by autoCleared<FragmentUsersBinding>()
 
 	private var department: String? = null
@@ -60,7 +61,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 
 	private fun filterTabsSetup() {
 		if (getCategory() == "all") {
-			getAllUsers(checkSortType())
+			getAllUsersFromDatabase(checkSortType())
 		}
 		usersListViewModel.getFilterUsersFromDatabase(getCategory(), checkSortType()).observe(
 			viewLifecycleOwner
@@ -81,7 +82,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 		return recyclerViewAdapter!!
 	}
 
-	private fun getAllUsers(sort: Int) {
+	private fun getAllUsersFromDatabase(sort: Int) {
 		usersListViewModel.getAllUsersFromDatabase(sort).observe(viewLifecycleOwner) { users ->
 			if (!users.isNullOrEmpty()) {
 				adapter.setItems(ArrayList(users))
@@ -133,6 +134,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 	}
 
 	override fun onClickedUser(userId: String) {
+
 		findNavController()
 			.navigate(R.id.action_homeFragment_to_profileDetailFragment, bundleOf("id" to userId))
 	}
@@ -153,6 +155,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 		getAdapter().sortType = (parentFragment as HomeFragment).getSortType()
 		filterTabsSetup()
 	}
+
 
 	enum class SortType {
 		ALPHABET,
