@@ -17,6 +17,7 @@
 <li> Retrofit2 </li>
 <li> Gson</li>
 <li> Glide</li>
+<li>DiffUtil</li>
 </ul>
 <div>
 
