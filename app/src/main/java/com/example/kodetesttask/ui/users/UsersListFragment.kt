@@ -5,6 +5,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat.getCategory
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -42,6 +43,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 						binding.loading.visibility = View.GONE
 						val filter = getCategory()
 						if (!it.data.isNullOrEmpty() && filter == "all") {
+							adapter.differ.submitList(ArrayList(it.data))
 							adapter.setItems(ArrayList(it.data))
 						}
 					}
@@ -66,7 +68,11 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 		usersListViewModel.getFilterUsersFromDatabase(getCategory(), checkSortType()).observe(
 			viewLifecycleOwner
 		) { users ->
-			if (!users.isNullOrEmpty()) adapter.setItems(ArrayList(users))
+			if (!users.isNullOrEmpty()) {
+				adapter.differ.submitList(ArrayList(users))
+				adapter.setItems(ArrayList(users))
+
+			}
 		}
 	}
 
@@ -85,6 +91,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 	private fun getAllUsersFromDatabase(sort: Int) {
 		usersListViewModel.getAllUsersFromDatabase(sort).observe(viewLifecycleOwner) { users ->
 			if (!users.isNullOrEmpty()) {
+				adapter.differ.submitList(ArrayList(users))
 				adapter.setItems(ArrayList(users))
 			}
 		}
@@ -122,6 +129,7 @@ open class UsersListFragment : Fragment(), Injectable, UserListAdapter.UsersItem
 		usersListViewModel.searchResults.observe(viewLifecycleOwner) { searchResult ->
 			if(searchResult.isNullOrEmpty()){
 				adapter.setItems(ArrayList(searchResult))
+
 				binding.searchFailed.visibility = View.VISIBLE
 			}
 			else{

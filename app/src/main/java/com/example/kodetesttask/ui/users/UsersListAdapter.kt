@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -21,8 +23,21 @@ class UserListAdapter(
 	var sortType: UsersListFragment.SortType,
 ) : RecyclerView.Adapter<UsersViewHolder>() {
 
-	private val items = ArrayList<UsersList>()
 
+	private val differCallback = object :
+		DiffUtil.ItemCallback<UsersList>() {
+		override fun areItemsTheSame(oldItem: UsersList, newItem: UsersList): Boolean {
+			return oldItem.id == newItem.id
+		}
+
+		@SuppressLint("DiffUtilEquals")
+		override fun areContentsTheSame(oldItem: UsersList, newItem: UsersList): Boolean {
+			return oldItem == newItem
+		}
+
+	}
+	val differ = AsyncListDiffer(this, differCallback)
+	private val items = ArrayList(differ.currentList)
 	private fun sort(users: Users): Users {
 		val usersList = Users()
 		users.forEach { user -> usersList.add(user) }
@@ -42,10 +57,13 @@ class UserListAdapter(
 		return UsersViewHolder(binding, listener)
 	}
 
+
 	override fun getItemCount(): Int = items.size
 
-	override fun onBindViewHolder(holder: UsersViewHolder, position: Int) =
-		holder.bind(items[position])
+	override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
+		holder.bind(ArrayList(differ.currentList)[position])
+
+	}
 
 	fun setItems(items: ArrayList<UsersList>) {
 		this.items.clear()
@@ -73,6 +91,7 @@ class UsersViewHolder(
 		listener.onClickedUser(user.id)
 	}
 
+
 	@SuppressLint("SetTextI18n")
 	fun bind(item: UsersList) {
 		this.user = item
@@ -84,4 +103,6 @@ class UsersViewHolder(
 			.transform(CircleCrop())
 			.into(itemBinding.avatarImageView)
 	}
+
+
 }
